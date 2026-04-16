@@ -72,12 +72,15 @@ let editingReviewId = null;
 const elements = {
   activeCount: document.querySelector("#activeCount"),
   antiPatternInput: document.querySelector("#antiPatternInput"),
+  cancelEditorButton: document.querySelector("#cancelEditorButton"),
   cadenceInput: document.querySelector("#cadenceInput"),
   cancelReviewButton: document.querySelector("#cancelReviewButton"),
   clearFormButton: document.querySelector("#clearFormButton"),
+  closeEditorButton: document.querySelector("#closeEditorButton"),
   currentDimensionLabel: document.querySelector("#currentDimensionLabel"),
   dimensionInput: document.querySelector("#dimensionInput"),
   dimensionList: document.querySelector("#dimensionList"),
+  editorDialog: document.querySelector("#editorDialog"),
   editorTitle: document.querySelector("#editorTitle"),
   emptyState: document.querySelector("#emptyState"),
   exportButton: document.querySelector("#exportButton"),
@@ -305,6 +308,21 @@ function clearForm() {
   elements.cadenceInput.value = "每周";
 }
 
+function openEditor() {
+  if (!elements.editorDialog.open) {
+    elements.editorDialog.showModal();
+  }
+
+  requestAnimationFrame(() => {
+    elements.titleInput.focus();
+  });
+}
+
+function closeEditor() {
+  elements.editorDialog.close();
+  clearForm();
+}
+
 function fillForm(principle) {
   elements.principleId.value = principle.id;
   elements.dimensionInput.value = principle.dimension;
@@ -318,7 +336,7 @@ function fillForm(principle) {
   elements.priorityInput.value = String(principle.priority || 3);
   elements.statusInput.value = principle.status || "active";
   elements.editorTitle.textContent = "编辑原则";
-  elements.titleInput.focus();
+  openEditor();
 }
 
 function formToPrinciple(existing) {
@@ -423,6 +441,7 @@ elements.principleForm.addEventListener("submit", (event) => {
 
   savePrinciples();
   clearForm();
+  elements.editorDialog.close();
   render();
 });
 
@@ -453,9 +472,11 @@ elements.cancelReviewButton.addEventListener("click", () => {
 });
 
 elements.clearFormButton.addEventListener("click", clearForm);
+elements.closeEditorButton.addEventListener("click", closeEditor);
+elements.cancelEditorButton.addEventListener("click", closeEditor);
 elements.newButton.addEventListener("click", () => {
   clearForm();
-  elements.titleInput.focus();
+  openEditor();
 });
 elements.searchInput.addEventListener("input", renderPrinciples);
 elements.sortSelect.addEventListener("change", renderPrinciples);

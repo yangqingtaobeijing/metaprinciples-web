@@ -78,94 +78,103 @@
           <p class="empty-state" id="emptyState" hidden>没有匹配的原则。可以换个关键词，或者新增一条。</p>
         </section>
 
-        <section class="editor-panel" aria-labelledby="editorTitle">
-          <div class="editor-title-row">
-            <div>
-              <p class="eyebrow">Principle Editor</p>
-              <h2 id="editorTitle">新增原则</h2>
-            </div>
-            <button class="text-button" id="clearFormButton" type="button">清空</button>
-          </div>
-
-          <form id="principleForm">
-            <input id="principleId" type="hidden" />
-
-            <label>
-              <span>维度</span>
-              <select id="dimensionInput" required>
-                <option value="工作">工作</option>
-                <option value="生活">生活</option>
-                <option value="健康">健康</option>
-                <option value="家庭关系">家庭关系</option>
-              </select>
-            </label>
-
-            <label>
-              <span>标题</span>
-              <input id="titleInput" type="text" maxlength="32" placeholder="例如：能量先于效率" required />
-            </label>
-
-            <label>
-              <span>一句话原则</span>
-              <textarea id="statementInput" rows="3" placeholder="把原则写成能直接指导行动的一句话" required></textarea>
-            </label>
-
-            <label>
-              <span>底层原因</span>
-              <textarea id="whyInput" rows="3" placeholder="为什么这条原则成立？它保护了什么？"></textarea>
-            </label>
-
-            <label>
-              <span>调用信号</span>
-              <textarea id="signalsInput" rows="3" placeholder="什么时候需要想起这条原则？"></textarea>
-            </label>
-
-            <label>
-              <span>常见反例</span>
-              <textarea id="antiPatternInput" rows="3" placeholder="违背它时，你通常会怎么表现？"></textarea>
-            </label>
-
-            <label>
-              <span>行动提示</span>
-              <textarea id="actionPromptInput" rows="2" placeholder="下一步最小行动是什么？"></textarea>
-            </label>
-
-            <div class="form-row">
-              <label>
-                <span>复盘频率</span>
-                <select id="cadenceInput">
-                  <option value="每周">每周</option>
-                  <option value="每两周">每两周</option>
-                  <option value="每月">每月</option>
-                  <option value="按需">按需</option>
-                </select>
-              </label>
-
-              <label>
-                <span>优先级</span>
-                <select id="priorityInput">
-                  <option value="5">5 - 核心</option>
-                  <option value="4">4 - 重要</option>
-                  <option value="3">3 - 常用</option>
-                  <option value="2">2 - 观察</option>
-                  <option value="1">1 - 备忘</option>
-                </select>
-              </label>
-            </div>
-
-            <label>
-              <span>状态</span>
-              <select id="statusInput">
-                <option value="active">正在使用</option>
-                <option value="paused">暂存观察</option>
-              </select>
-            </label>
-
-            <button class="button primary full" type="submit">保存原则</button>
-          </form>
-        </section>
       </main>
     </div>
+
+    <dialog class="editor-dialog" id="editorDialog">
+      <section class="editor-panel" aria-labelledby="editorTitle">
+        <div class="editor-title-row">
+          <div>
+            <p class="eyebrow">Principle Editor</p>
+            <h2 id="editorTitle">新增原则</h2>
+          </div>
+          <div class="editor-tools">
+            <button class="text-button" id="clearFormButton" type="button">清空</button>
+            <button class="text-button" id="closeEditorButton" type="button">关闭</button>
+          </div>
+        </div>
+
+        <form id="principleForm">
+          <input id="principleId" type="hidden" />
+
+          <label>
+            <span>维度</span>
+            <select id="dimensionInput" required>
+              <option value="工作">工作</option>
+              <option value="生活">生活</option>
+              <option value="健康">健康</option>
+              <option value="家庭关系">家庭关系</option>
+            </select>
+          </label>
+
+          <label>
+            <span>标题</span>
+            <input id="titleInput" type="text" maxlength="32" placeholder="例如：能量先于效率" required />
+          </label>
+
+          <label>
+            <span>一句话原则</span>
+            <textarea id="statementInput" rows="3" placeholder="把原则写成能直接指导行动的一句话" required></textarea>
+          </label>
+
+          <label>
+            <span>底层原因</span>
+            <textarea id="whyInput" rows="3" placeholder="为什么这条原则成立？它保护了什么？"></textarea>
+          </label>
+
+          <label>
+            <span>调用信号</span>
+            <textarea id="signalsInput" rows="3" placeholder="什么时候需要想起这条原则？"></textarea>
+          </label>
+
+          <label>
+            <span>常见反例</span>
+            <textarea id="antiPatternInput" rows="3" placeholder="违背它时，你通常会怎么表现？"></textarea>
+          </label>
+
+          <label>
+            <span>行动提示</span>
+            <textarea id="actionPromptInput" rows="2" placeholder="下一步最小行动是什么？"></textarea>
+          </label>
+
+          <div class="form-row">
+            <label>
+              <span>复盘频率</span>
+              <select id="cadenceInput">
+                <option value="每周">每周</option>
+                <option value="每两周">每两周</option>
+                <option value="每月">每月</option>
+                <option value="按需">按需</option>
+              </select>
+            </label>
+
+            <label>
+              <span>优先级</span>
+              <select id="priorityInput">
+                <option value="5">5 - 核心</option>
+                <option value="4">4 - 重要</option>
+                <option value="3">3 - 常用</option>
+                <option value="2">2 - 观察</option>
+                <option value="1">1 - 备忘</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            <span>状态</span>
+            <select id="statusInput">
+              <option value="active">正在使用</option>
+              <option value="paused">暂存观察</option>
+            </select>
+          </label>
+
+          <div class="dialog-actions">
+            <button class="button subtle" id="cancelEditorButton" type="button">取消</button>
+            <button class="button primary" type="submit">保存原则</button>
+          </div>
+        </form>
+      </section>
+    </dialog>
 
     <dialog id="reviewDialog">
       <form method="dialog" id="reviewForm">

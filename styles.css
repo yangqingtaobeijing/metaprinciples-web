@@ -180,7 +180,7 @@ dialog h2 {
 
 .workspace {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr) 380px;
+  grid-template-columns: 300px minmax(0, 1fr);
   gap: 20px;
   align-items: start;
   padding-top: 20px;
@@ -479,8 +479,14 @@ textarea:focus {
 }
 
 .editor-panel {
-  position: sticky;
-  top: 16px;
+  display: block;
+}
+
+.editor-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
 form {
@@ -513,6 +519,18 @@ dialog {
   border-radius: 8px;
   background: var(--white);
   box-shadow: 10px 10px 0 var(--ink);
+}
+
+.editor-dialog {
+  width: min(760px, calc(100% - 32px));
+  max-height: min(92vh, 920px);
+  padding: 0;
+  overflow: auto;
+}
+
+.editor-dialog .editor-panel {
+  border: 0;
+  box-shadow: none;
 }
 
 dialog::backdrop {
@@ -556,11 +574,6 @@ dialog p {
 @media (max-width: 1180px) {
   .workspace {
     grid-template-columns: 280px minmax(0, 1fr);
-  }
-
-  .editor-panel {
-    grid-column: 1 / -1;
-    position: static;
   }
 }
 
