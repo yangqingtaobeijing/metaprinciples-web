@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>元原则库</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <p class="eyebrow">First Principles</p>
+          <h1>元原则库</h1>
+          <p class="tagline">把反复影响判断的少数原则，放在每天能看见的位置。</p>
+        </div>
+        <div class="top-actions" aria-label="全局操作">
+          <div class="metric">
+            <span id="totalCount">0</span>
+            <small>全部原则</small>
+          </div>
+          <div class="metric accent">
+            <span id="activeCount">0</span>
+            <small>正在使用</small>
+          </div>
+          <button class="button subtle" id="exportButton" type="button">导出 JSON</button>
+          <button class="button danger-subtle" id="resetButton" type="button">恢复示例</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="control-panel" aria-label="原则筛选">
+          <img
+            class="panel-image"
+            src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=80"
+            alt="打开的笔记本和工作台"
+          />
+
+          <section class="filter-zone">
+            <div class="section-heading">
+              <span>维度</span>
+              <button class="text-button" id="newButton" type="button">新增原则</button>
+            </div>
+            <div class="dimension-list" id="dimensionList" role="tablist" aria-label="维度筛选"></div>
+          </section>
+
+          <label class="search-box" for="searchInput">
+            <span>搜索</span>
+            <input id="searchInput" type="search" placeholder="原则、原因、反例、信号" autocomplete="off" />
+          </label>
+
+          <section class="focus-box" aria-labelledby="focusTitle">
+            <p class="eyebrow">Today's Check</p>
+            <h2 id="focusTitle">今日校准</h2>
+            <p id="focusText">暂无需要复盘的原则。</p>
+            <button class="button full" id="focusReviewButton" type="button">复盘这条</button>
+          </section>
+        </aside>
+
+        <section class="principle-stage" aria-labelledby="stageTitle">
+          <div class="stage-header">
+            <div>
+              <p class="eyebrow" id="currentDimensionLabel">全部维度</p>
+              <h2 id="stageTitle">原则列表</h2>
+            </div>
+            <div class="sort-control">
+              <label for="sortSelect">排序</label>
+              <select id="sortSelect">
+                <option value="priority">优先级</option>
+                <option value="review">最久未复盘</option>
+                <option value="dimension">维度</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="principle-grid" id="principleGrid" aria-live="polite"></div>
+          <p class="empty-state" id="emptyState" hidden>没有匹配的原则。可以换个关键词，或者新增一条。</p>
+        </section>
+
+        <section class="editor-panel" aria-labelledby="editorTitle">
+          <div class="editor-title-row">
+            <div>
+              <p class="eyebrow">Principle Editor</p>
+              <h2 id="editorTitle">新增原则</h2>
+            </div>
+            <button class="text-button" id="clearFormButton" type="button">清空</button>
+          </div>
+
+          <form id="principleForm">
+            <input id="principleId" type="hidden" />
+
+            <label>
+              <span>维度</span>
+              <select id="dimensionInput" required>
+                <option value="工作">工作</option>
+                <option value="生活">生活</option>
+                <option value="健康">健康</option>
+                <option value="家庭关系">家庭关系</option>
+              </select>
+            </label>
+
+            <label>
+              <span>标题</span>
+              <input id="titleInput" type="text" maxlength="32" placeholder="例如：能量先于效率" required />
+            </label>
+
+            <label>
+              <span>一句话原则</span>
+              <textarea id="statementInput" rows="3" placeholder="把原则写成能直接指导行动的一句话" required></textarea>
+            </label>
+
+            <label>
+              <span>底层原因</span>
+              <textarea id="whyInput" rows="3" placeholder="为什么这条原则成立？它保护了什么？"></textarea>
+            </label>
+
+            <label>
+              <span>调用信号</span>
+              <textarea id="signalsInput" rows="3" placeholder="什么时候需要想起这条原则？"></textarea>
+            </label>
+
+            <label>
+              <span>常见反例</span>
+              <textarea id="antiPatternInput" rows="3" placeholder="违背它时，你通常会怎么表现？"></textarea>
+            </label>
+
+            <label>
+              <span>行动提示</span>
+              <textarea id="actionPromptInput" rows="2" placeholder="下一步最小行动是什么？"></textarea>
+            </label>
+
+            <div class="form-row">
+              <label>
+                <span>复盘频率</span>
+                <select id="cadenceInput">
+                  <option value="每周">每周</option>
+                  <option value="每两周">每两周</option>
+                  <option value="每月">每月</option>
+                  <option value="按需">按需</option>
+                </select>
+              </label>
+
+              <label>
+                <span>优先级</span>
+                <select id="priorityInput">
+                  <option value="5">5 - 核心</option>
+                  <option value="4">4 - 重要</option>
+                  <option value="3">3 - 常用</option>
+                  <option value="2">2 - 观察</option>
+                  <option value="1">1 - 备忘</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              <span>状态</span>
+              <select id="statusInput">
+                <option value="active">正在使用</option>
+                <option value="paused">暂存观察</option>
+              </select>
+            </label>
+
+            <button class="button primary full" type="submit">保存原则</button>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="reviewDialog">
+      <form method="dialog" id="reviewForm">
+        <p class="eyebrow">Review</p>
+        <h2 id="reviewDialogTitle">原则复盘</h2>
+        <p id="reviewDialogStatement"></p>
+        <label>
+          <span>这次你观察到了什么？</span>
+          <textarea id="reviewNotesInput" rows="5" placeholder="记录一次真实行动、偏差、修订想法或下一步提醒"></textarea>
+        </label>
+        <div class="dialog-actions">
+          <button class="button subtle" value="cancel" type="button" id="cancelReviewButton">取消</button>
+          <button class="button primary" value="confirm" type="submit">完成复盘</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
